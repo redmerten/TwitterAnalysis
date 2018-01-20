@@ -8,18 +8,18 @@ import {combineReducers} from 'redux'  //action creators immediately return acti
 // import authReducer from './authReducer'
 
 import blogReducer from './blogReducer'
+import tweetReducer from './tweetReducer'
 import serviceChartReducer from './serviceChartReducer'
-import selectedBlogReducer from './selectedBlogReducer'
+//import selectedBlogReducer from './selectedBlogReducer'
 
 
 //this is imported by main index.js
 //auth piece of state is manufactured by the auth reducer
 export default combineReducers({
   // auth: authReducer,
-  // products: productReducer,
-  // images: imageReducer,
-  // detail: prodDetailReducer
+
   blog: blogReducer,
-  serviceChart: serviceChartReducer,
-  selectedBlog: selectedBlogReducer
+  tweets: tweetReducer
+  //serviceChart: serviceChartReducer,
+  //selectedBlog: selectedBlogReducer
 })

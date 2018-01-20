@@ -8,6 +8,7 @@ const keys = require('./config/keys')
 require('./models/User')
 require('./models/Product')
 require('./models/Cart')
+require('./models/Tweets')
 require('./services/passport')
 //instead use below require without authRoutes(app)
 const authRoutes = require('./routes/authRoutes') //import authRoutes function
@@ -51,6 +52,7 @@ require('./routes/cartRoutes')(app)
 require('./routes/imageRoutes')(app)
 require('./routes/blogRoutes')(app)
 require('./routes/serviceRoutes')(app)
+require('./routes/twitterRoutes')(app)
 
 if (process.env.NODE_ENV === 'production'){
   app.use(express.static('client/build'))

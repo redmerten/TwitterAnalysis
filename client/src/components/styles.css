@@ -28,3 +28,7 @@ a.pt-menu-item {
 .zoomIn{
   flex-grow:2;
 }
+
+text{
+  transform: rotate(30deg)
+}

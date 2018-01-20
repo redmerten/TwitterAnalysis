@@ -1,5 +1,4 @@
 
-//import 'materialize-css/dist/css/materialize.min.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
 //provider will be the most parent component so all components have access to data store
@@ -11,7 +10,7 @@ import 'normalize.css'
 import App from './components/App'
 //index in reducers folder allow us to import all at once via combinereducers
 import reducers from './reducers'
-//import registerServiceWorker from './registerServiceWorker'
+import registerServiceWorker from './registerServiceWorker'
 
 //param is all reducers which are the data
 //to get started param 1:dummy reducer to get started, 2: initial state, 3:

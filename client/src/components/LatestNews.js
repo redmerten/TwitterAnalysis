@@ -5,7 +5,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {fetchBlog, fetchSelectedBlog} from '../actions/index'
+import {fetchBlog} from '../actions/index'
 import Media from 'react-media'
 
 
@@ -154,7 +154,7 @@ class LatestNews extends Component{
 
   componentDidMount(){
     this.props.fetchBlog()
-    console.log('latest news',this.props)
+    //console.log('latest news',this.props)
   }
 
 
@@ -219,7 +219,6 @@ class LatestNews extends Component{
       <div style={{'backgroundColor': lightBlue}}>
         <Media query='(max-width: 812px)'>
           {matches => {
-            console.log('matches', matches)
             return (
               matches ? (
                 this.renderLatestNews(styles.smViewStyle)
@@ -240,4 +239,4 @@ const mapStateToProps = (state) =>{
   return state
 }
 
-export default connect(mapStateToProps, {fetchBlog, fetchSelectedBlog})(LatestNews)
+export default connect(mapStateToProps, {fetchBlog})(LatestNews)

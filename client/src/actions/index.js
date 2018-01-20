@@ -6,7 +6,7 @@
 
 import {FETCH_BLOG} from './types'
 import {FETCH_SERVICECHART} from './types'
-import {FETCH_SELECTED_BLOG} from './types'
+import {FETCH_TWEETS} from './types'
 import axios from 'axios'
 
 
@@ -20,8 +20,10 @@ export const  fetchServiceChart = () => async dispatch => {
   dispatch({ type: FETCH_SERVICECHART, payload: res.data})
 }
 
-export const fetchSelectedBlog = (blogid) => async dispatch => {
-  const res = await axios.get('/api/selectedblog',
-    {params: {blogid}})
-  dispatch({ type: FETCH_SELECTED_BLOG, payload: res.data})
+
+export const fetchTweets = (tweeter) => async dispatch => {
+  console.log('inside tweet action')
+  const res = await axios.get('/api/tweets',
+    {params: {tweeter}})
+  dispatch({ type: FETCH_TWEETS, payload: res.data})
 }

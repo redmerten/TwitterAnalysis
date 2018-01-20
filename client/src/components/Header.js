@@ -48,15 +48,15 @@ const styles ={
       alignItems:'center',
       marginLeft:"1%"
     },
-    iconSize:'2x',
+    iconSize:'3x',
     textStyle:{
       fontSize:'125%',
-      marginTop:'3%',
+      marginTop:'1%',
     },
     brandTextStyle:{
-      fontSize:'140%',
+      fontSize:'150%',
       marginTop:'5%',
-      fontFamily:'Oldtime',
+      fontFamily:'Arial',
       fontVariant: 'small-caps',
       color:blueBlk
     },
@@ -87,19 +87,9 @@ const styles ={
     },
   },
 
-  lgNavMenu:{
-    buttons:{
-      fontSize:'100%',
-      fontFamily:'Helvetica Neue, Helvetica, Arial, sans-serif',
-      //fontVariant: 'small-caps',
-      color: blueBlk
-    }
-  },
 
-  burgerButton:{
-    border:'none'
 
-  },
+
   smlViewP:{
     fontFamily:'Helvetica Neue,Helvetica,Arial,sans-serif',
     //fontVariant: 'small-caps',
@@ -126,49 +116,6 @@ const styles ={
   }
 }
 
-const map = "https://www.google.com/maps/place/Woodside+Bike+Shop/@37.4561654,-122.2299071,17z/data=!3m1!4b1!4m5!3m4!1s0x808fa384f074f6ad:0x5901b012d225ee78!8m2!3d37.4561654!4d-122.2277184"
-
-/*
-
- */
-
-
-// ORDER PER OWNER: santa cruz, norco, yeti, dav, salsa, haro, pure, kink, reid, transition
-//why buy from wbs vs direct from mfr
-
-const bikeBrands =
-  [{brand:'Santa Cruz',url:'https://www.santacruzbicycles.com/en-US'},
-    {brand:'Norco',url:'http://www.norco.com'},
-    {brand:'Yeti',url:'http://www.yeticycles.com/'},
-    {brand:'Da Vinci',url:'http://www.devinci.com/'},
-    {brand:'Salsa',url:'http://salsacycles.com'},
-    {brand:'Haro', url:'https://www.harobikes.com/'},
-    {brand:'Pure Cycles',url:'https://www.purecycles.com/?gclid=CjwKCAiA9rjRBRAeEiwA2SV4ZeI1SCGgjK7KwtUZMTOCKXhPewipzp0v-OcW5IRInrXisjBLQ_QppxoCnEMQAvD_BwE'},
-    {brand: 'KINK BMX', url: 'https://www.kinkbmx.com/'},
-    {brand:'Reid',url:'https://www.reidbikes.com/'},
-    {brand:'Transition',url:'https://www.transitionbikes.com/'}
-  ]
-
-const bikingLinks = [
-  {brand: 'Midpeninsula Open Space Trails', url: 'https://www.openspace.org/preserves'},
-  {brand: 'MTB Trail Guide', url: 'https://www.mtbproject.com/directory/8007188/bay-area'}
-]
-
-
-const popOverMenu = (typeArr)=> {
-  //typeArr.sort((a, b)=>a.brand>b.brand)
-  return(
-    <Menu >
-      {typeArr.map((b,i)=>{
-        return(
-          <a href={b.url} key={i}>
-            <MenuItem style={{...styles.fontStyle}} text={b.brand} />
-          </a>
-        )
-      })}
-    </Menu>
-  )
-}
 
 
 class Header extends Component {
@@ -179,245 +126,38 @@ class Header extends Component {
       <div
         style={style.div}
       >
-        <Icon size={style.iconSize} name="bicycle" style={{'marginLeft':'2%'}}/>
+        <Icon size={style.iconSize} name="eye" style={{'marginLeft':'1%'}}/>
         <Link to='/' //className="pt-navbar-heading"
               style={{"marginLeft":"3%", 'display':'flex', 'alignItems':'center'}}>
           <p style={style.brandTextStyle}>
-            Woodside Bike Shop
+            Twitter Analyzer
           </p>
         </Link>
       </div>
     )
   }
 
-  renderLargeNavItems=()=>{
-    return(
-      <div style={{'flexGrow':'2.75','display': 'flex',
-        'justifyContent': 'space-evenly', ...styles.fontStyle}}>
-        <Popover
-          //content={popOverMenu(bikeBrands)}
-          content={this.renderBikesAndServices()}
-          interactionKind={PopoverInteractionKind.CLICK}
-          position={Position.BOTTOM}
-        >
-          <button
-            className="pt-button pt-minimal"
-            style={styles.lgNavMenu.buttons}
-          >
-            Bikes and Services
-          </button>
-        </Popover>
-        <Popover
-          content={this.renderHours()}
-          interactionKind={PopoverInteractionKind.CLICK}
-          position={Position.BOTTOM}
-        >
-          <button
-            className="pt-button pt-minimal"
-            style={styles.lgNavMenu.buttons}>Location and Hours</button>
-        </Popover>
-
-        <Popover
-          content={popOverMenu(bikingLinks)}
-          interactionKind={PopoverInteractionKind.CLICK}
-          position={Position.BOTTOM}
-          style={{}}
-        >
-          <button
-            className="pt-button pt-minimal"
-            style={styles.lgNavMenu.buttons}>Local Biking Info </button>
-        </Popover>
-      </div>
-    )
-  }
-
-  renderContactUs=(style)=>{
-    return(
-      <div
-        style={style.contactUsDiv}
-      >
-        <Popover
-          content={this.renderContact()}
-          interactionKind={PopoverInteractionKind.CLICK}
-          position={Position.BOTTOM}
-          style={{}}
-        >
-          <button
-             className="pt-button pt-minimal"
-             style={styles.lgNavMenu.buttons}>
-            Contact Us
-          </button>
-        </Popover>
-      </div>
-    )
-  }
-
-  renderHours=()=>{
-
-    // console.log('renderhours', this.state.hoursIsOpen)
-    return(
-      <Menu>
-        <a href= {map} style={{...styles.fontStyle}}>
-          <MenuItem text='Location'/>
-        </a>
-          <MenuItem text='Hours' style={{'fontSize':'125%'}}>
-            <div style={{
-              'display':'flex',
-              'flexDirection':'column',
-              'width':'25vw'
-            }}>
-              <img src={bikes1} alt=""
-                   style={{maxWidth:'25vw'}}/>
-
-              <div style={{...styles.fontStyle, 'margin' :'2% 0% 0% 5%'}}>
-                <h4 >Woodside Bike Shop Hours</h4>
-                <div style={{'fontSize':'125%'}}>
-                  <p>Monday through Saturday: 10am - 6pm</p>
-                  <p>Sunday by Appointment</p>
-                </div>
-              </div>
-            </div>
-          </MenuItem>
-      </Menu>
-
-    )
-  }
-
-  renderContact=()=>{
-    return(
-      <Menu
-        //style={{'width':'200px'}}
-      >
-        <a
-          href="tel:6502991071"
-          style={{...styles.fontStyle, 'fontSize':'100%'}}
-        >
-          <MenuItem className="pt-button pt-minimal pt-icon-mobile-phone" text='Call'/>
-        </a>
-        <a href="mailto:woodsidemechanic@gmail.com" style={{...styles.fontStyle, 'fontSize':'100%'}}>
-          <MenuItem className="pt-button pt-minimal pt-icon-envelope" text='Email'/>
-        </a>
-      </Menu>
-    )
-  }
-
-
-  renderBikesAndServices=()=>{
-    return(
-      <Menu>
-        <Popover
-          content={popOverMenu(bikeBrands)}
-          interactionKind={PopoverInteractionKind.CLICK}
-          position={Position.BOTTOM}
-        >
-          <button
-            className="pt-button pt-minimal"
-            style={{...styles.fontStyle, 'fontSize':'125%'}}
-          >
-            Bikes
-          </button>
-        </Popover>
-
-        <Link to='/serviceChart'>
-          <MenuItem text="Services" />
-        </Link>
-
-      </Menu>
-    )
-  }
-
-  renderSmallScreen=()=>{
-    return(
-      <nav className="pt-navbar pt-fixed-top "
-           style={styles.navStyle}>
-        <div style={{
-          "marginLeft": "1%",
-          'flexGrow':'1'
-        }}
-        >
-          <Popover
-            content={
-              <Menu>
-                {this.renderBikesAndServices()}
-                <Menu>
-                  <a href= {map} style={{
-                    ...styles.fontStyle,
-                    //'fontSize':'1.25em'
-                    'marginTop':'2%'
-                  }}>
-                    <MenuItem style={{...styles.fontStyle}} text='Location'/>
-                  </a>
-                </Menu>
-
-                <Menu text='Hours' style={{'fontSize':'125%'}}>
-                  <div style={{
-                    'display':'flex',
-                    'flexDirection':'column',
-                    'width':'250px',
-                    'margin' :'2% 0% 0% 2%'
-                  }}>
-                    <p style={{...styles.fontStyle, 'fontSize':'125%'}}>Hours</p>
-                    <p style={styles.smlViewP}>Mon-Sat: 10am-6pm</p>
-                    <p style={styles.smlViewP}>Sun by Appointment</p>
-                  </div>
-                </Menu>
-
-                <Popover
-                  content={popOverMenu(bikingLinks)}
-                  interactionKind={PopoverInteractionKind.CLICK}
-                  position={Position.BOTTOM}
-                  style={{}}
-                >
-                  <button
-                    className="pt-button pt-minimal"
-                    style={{...styles.fontStyle, 'fontSize':'125%'}}>Local Biking Info </button>
-                </Popover>
-              </Menu>
-            }
-            position={Position.RIGHT_TOP}>
-            <button className="pt-button pt-minimal">
-              <Icon size="2x" name="bars"/>
-            </button>
-          </Popover>
-
-        </div>
-        {this.renderBrandDiv(styles.navSmlBrandDiv)}
-        {this.renderContactUs(styles.smlView)}
-      </nav>
-    )
-  }
-
-  renderLargeScreen=()=>{
-    return(
-      <nav
-        className="pt-navbar pt-fixed-top "
-        style = {styles.navStyle}
-      >
-        {this.renderBrandDiv(styles.navLgBrandDiv)}
-        {this.renderLargeNavItems()}
-        {this.renderContactUs(styles.lgView)}
-
-      </nav>
-    )
-  }
 
   render(){
     return(
-      <div >
+    <nav
+      className="pt-navbar pt-fixed-top "
+      style = {styles.navStyle}
+    >
         <Media query= '(max-width: 812px)'>
           {matches => {
             console.log('matches', matches)
             return(
               matches ? (
-                this.renderSmallScreen()
+                this.renderBrandDiv(styles.navSmlBrandDiv)
               ):(
-                this.renderLargeScreen()
+                this.renderBrandDiv(styles.navLgBrandDiv)
                 )
             )
           }
           }
         </Media>
-      </div>
+      </nav>
     )
   }
 }

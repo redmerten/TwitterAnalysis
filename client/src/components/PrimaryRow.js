@@ -1,140 +1,184 @@
 /**
- * Created by AndreaMerten on 12/28/17.
+ * Created by AndreaMerten on 1/18/17.
  */
 
-import React from 'react'
-import ScrollAnimation from 'react-animate-on-scroll'
-import 'animate.css/animate.min.css'
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
 import Media from 'react-media'
+import {Icon} from 'react-fa'
+import {BarChart} from 'react-easy-chart';
 
 
-import wideShopSign from '../images/bikeShopPics/wideshopsign.JPG'
+import {fetchTweets} from '../actions/index'
+import _ from 'lodash'
+import './styles.css'
 
 
-// const viewStyle = {
-//   height:'80vh',
-//   width:'100vw'
-// }
-const lightBlue='#52A0F5'
-const orange = '#BB6558'
-const darkBlue = '#0073C4'
-const blueBlk='#1A3256'
+
+class PrimaryRow extends Component{
+  state:{
+    inputValue:''
+  }
+
+  updateInputValue =(evt) =>{
+    this.setState({inputValue: evt.target.value})
+  }
+
+  componentDidMount(){
+    this.props.fetchTweets('KamalaHarris')
+    //console.log('tweets',this.props)
+
+  }
+
+  tweetsToOneWordCount = () =>{
+    const no = `if all when not &amp our the of at it so my who as has them about are to i a an this we in their they us by for you with i'm on which would until from and that too have is be —`
+    const nonos = no.split(' ')
+    nonos.sort()
+    console.log(nonos)
+    const punctuation = ['.', ',', '?', '!', '"', ';', ':']
+    const words={}
+
+    this.props.tweets.forEach(t=>{
+      //console.log(t)
+      t.full_text.split(' ')
+        .forEach(w=>{
+          let word = w.toLowerCase()
+          if (punctuation.includes(word[word.length-1])) {
+            word =word.slice(0, word.length-1)
+            //console.log('punct', word)
+          }
+          if (!nonos.includes(word)){
+            if (word in words){
+              words[word] +=1
+            }
+            else {
+              words[word] = 1
+            }
+          }
+        })
+
+    })
+    const wordArray = _.map(words, (val, key) => {
+        return { "x": key, "y": val }
+      })
+    wordArray.sort((a,b)=>b.y - a.y)
+    console.log('wordJSON',wordArray)
+    return wordArray
+  }
+
+  renderChart=(data)=>{
+
+    return(
+      <div style={styles.chartDiv}>
+        <BarChart
+          colorBars
+          axes
+          //margin={{top: 50, right: 100, bottom: 50, left: 100}}
+          axisLabels={{x: 'Word', y: 'Word Count'}}
+          height={500}
+          width={1000}
+          yTickNumber={data[0].y}
+          data={data}
+        />
+      </div>
+    )
+  }
+
+  analyzeTweets =()=>{
+    const oneWordJSON=this.tweetsToOneWordCount()
+    //const dataToChart=oneWordJSON.filter(w=>w.y>5)
+    const dataToChart = oneWordJSON.slice(0,20)
+    console.log(dataToChart)
+    return(
+      <div style={styles.nextDiv}>
+        {this.renderChart(dataToChart)}
+
+      </div>
+    )
+  }
+
+  renderPrimaryRow=(style)=> {
+
+    return (
+      <div style={style.mainDiv}>
+        <h4>Tweet Analysis</h4>
+        <input value={this.state.inputValue} onChange={evt => this.updateInputValue(evt)}>
+          Whose Tweets Would you Like to Analyze?
+        </input>
+
+        {Array.isArray(this.props.tweets)
+          ? this.analyzeTweets()
+          : <div style={styles.nextDiv}>
+             <Icon spin name="spinner" style={styles.iconStyle}/>
+          </div>
+        }
 
 
-const fontStyle ={
-  //fontFamily:'Helvetica Neue, Helvetica, Arial, sans-serif',
-  fontFamily:'Oldtown',
-  fontVariant: 'small-caps',
-  color: blueBlk
+      </div>
+    )
+  }
+
+  render() {
+    //console.log('tweets in render ',this.props.tweets)
+    return (
+      <div style={{}}>
+        <Media query='(max-width: 812px)'>
+          {matches => {
+            return (
+              matches ? (
+                this.renderPrimaryRow(styles.smlScreen)
+              ) : (
+                this.renderPrimaryRow(styles.lgScreen)
+              )
+            )
+          }
+          }
+        </Media>
+
+      </div>
+
+    )
+  }
 }
 
 const styles={
   lgScreen:{
-    div:{
-      height:'90vh',
-      display:'flex',
-    },
-    img:{
-      flexGrow:'1',
-      width:'100%',
-      height:'90vh',
-      overflow:'hidden'
-    },
-    animatedWordsDiv:{
-      position:'absolute',
-      top:'90px',
-      right:'10%'
-      //top:'18%',
-      //right:'8%'
-    },
-
-    wordsDiv:{
-      //'display':'flex', 'flexDirection':'column', 'justifyContent':'center', 'alignItems':'center'
+    mainDiv:{
+      paddingTop:'60px',
       display:'flex',
       flexDirection:'column',
       justifyContent:'center',
       alignItems:'center',
-    },
-    pStyle:{
-      ...fontStyle,
-      color:blueBlk,
-      fontSize:'200%'
-    }
+      width: '75vw'
 
+    },
+    nextDiv:{
+      display:'flex',
+      flexDirection:'column',
+      justifyContent:'center',
+      alignItems:'center',
+      marginTop:'2%'
+
+    },
+    spinnerStyle:{
+      iconSize:'3x',
+      display:'flex',
+      justifyContent:'center'
+    },
+    chartDiv:{
+      display:'flex',
+      justifyContent:'center',
+      alignItems:'center'
+    }
   },
   smlScreen:{
 
   }
 }
 
-const renderLgScreen=(style)=>{
-  return(
-  <div style={style.div}>
-    <img src={wideShopSign} alt=""
-         style={style.img}/>
-    <div style={style.animatedWordsDiv}>
-      <ScrollAnimation animateIn='zoomIn' offset={0}>
-        <div style={style.wordsDiv}>
-        <p style={style.pStyle}>Ready</p>
-        <p style={style.pStyle}>to</p>
-        <p style={style.pStyle}>Ride?</p>
-        </div>
-      </ScrollAnimation>
-    </div>
-  </div>
-  )
-}
-const renderSmlScreen=()=>{
-  return(
-    <div style={{
-      'display':'flex',
-      'justifyContent':'stretch',
-      'alignItems':'stretch',
-      //'height':'90%',
-      'paddingTop':'40px',
 
-    }}>
-      <img src={wideShopSign} alt=""
-           style={{
-             'width':'100%',
-             'height' :'375px',
-             //'height':'375px',
-             //'overflow':'hidden'
-           }}/>
-      <div style={{'position':'absolute',  'top':'85px', 'right':'5%' }}>
-        <ScrollAnimation animateIn='zoomIn' offset={0}>
-          <div style={{'display':'flex', 'flexDirection':'column', 'justifyContent':'center', 'alignItems':'center'}}>
-            <p style={{...fontStyle, 'color':blueBlk, 'fontSize':'120%'}}>Ready</p>
-            <p style={{...fontStyle, 'color':blueBlk, 'fontSize':'120%'}}>to</p>
-            <p style={{...fontStyle, 'color':blueBlk, 'fontSize':'120%'}}>Ride?</p>
-          </div>
-        </ScrollAnimation>
-      </div>
-    </div>
-  )
+const mapStateToProps = (state) =>{
+  return state
 }
 
-
-const primaryRow = () =>{
-  return(
-    <div style={{'backgroundColor':lightBlue}}>
-      <Media query= '(max-width: 812px)'>
-        {matches => {
-          console.log('matches', matches)
-          return(
-            matches ? (
-              renderSmlScreen(styles.smlScreen)
-            ):(
-              renderLgScreen(styles.lgScreen)
-            )
-          )
-        }
-        }
-      </Media>
-
-    </div>
-
-  )
-}
-
-export default primaryRow
+export default connect(mapStateToProps, {fetchTweets})(PrimaryRow)

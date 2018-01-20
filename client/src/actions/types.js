@@ -8,5 +8,4 @@
 // export const FETCH_DETAIL = 'fetch_detail'
  export const FETCH_BLOG = 'fetch_blog'
  export const FETCH_SERVICECHART = 'fetch_servicechart'
- //export const FETCH_SELECTED_BLOG = 'fetch_selected_blog'
- export const FETCH_SELECTED_BLOG = 'fetch_selected_blog'
+ export const FETCH_TWEETS = 'fetch_tweets'
