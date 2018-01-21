@@ -9,7 +9,6 @@ import '@blueprintjs/core/dist/blueprint.css'
 import Header from './Header'
 import Landing from './Landing'
 import Footer from './Footer'
-import BlogDetail from './BlogDetail'
 
 
 class  App extends Component {
@@ -21,7 +20,6 @@ class  App extends Component {
             <div >
               <Header/>
               <Route exact path="/" component={Landing}/>
-              <Route exact path="/detail/:blogid" component={BlogDetail}/>
               <Footer/>
             </div>
           </BrowserRouter>

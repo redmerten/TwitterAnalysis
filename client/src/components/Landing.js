@@ -4,9 +4,8 @@
 
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import '@blueprintjs/core/dist/blueprint.css'
+//import '@blueprintjs/core/dist/blueprint.css'
 import PrimaryRow from './PrimaryRow'
-import LatestNews from './LatestNews'
 
 
 class Landing extends Component {
@@ -17,7 +16,6 @@ class Landing extends Component {
       <div style={{'paddingTop':'3%'}}>
         <PrimaryRow/>
 
-        {/*<LatestNews/>*/}
       </div>
     )}
 }

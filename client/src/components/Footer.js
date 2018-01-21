@@ -8,7 +8,9 @@ import React from 'react'
 const styles={
   div:{
     display:'flex',
-    justifyContent:'center'
+    justifyContent:'center',
+    marginTop:'5%',
+    width: '75vw'
   }
 }
 
@@ -20,5 +22,6 @@ const Footer = () => {
     </div>
   )
 }
+
 
 export default Footer

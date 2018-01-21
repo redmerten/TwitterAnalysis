@@ -7,9 +7,8 @@
 import {combineReducers} from 'redux'  //action creators immediately return action+payload
 // import authReducer from './authReducer'
 
-import blogReducer from './blogReducer'
+//import blogReducer from './blogReducer'
 import tweetReducer from './tweetReducer'
-import serviceChartReducer from './serviceChartReducer'
 //import selectedBlogReducer from './selectedBlogReducer'
 
 
@@ -18,7 +17,7 @@ import serviceChartReducer from './serviceChartReducer'
 export default combineReducers({
   // auth: authReducer,
 
-  blog: blogReducer,
+  //blog: blogReducer,
   tweets: tweetReducer
   //serviceChart: serviceChartReducer,
   //selectedBlog: selectedBlogReducer

@@ -4,25 +4,20 @@
 
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
-import bikes1 from '../images/bikeShopPics/IMG_2609.JPG'
 import Media from 'react-media'
-//import Menu as BurgerMenu, {SubMenu, MenuItem as BurgerMenuItem} from 'rc-menu';
-//import { slide as BurgerMenu } from 'react-burger-menu'
 import './styles.css'
 
-import {
-  Menu,
-  MenuItem,
-  PopoverInteractionKind,
-  Popover,
-  Position
-} from "@blueprintjs/core"
+// import {
+//   Menu,
+//   MenuItem,
+//   PopoverInteractionKind,
+//   Popover,
+//   Position
+// } from "@blueprintjs/core"
 import '@blueprintjs/core/dist/blueprint.css'
 import {Icon} from 'react-fa'
 
-const lightBlue='#52A0F5'
-const orange = '#BB6558'
-const darkBlue = '#0073C4'
+
 const blueBlk='#1A3256'
 
 const styles ={
@@ -55,7 +50,7 @@ const styles ={
     },
     brandTextStyle:{
       fontSize:'150%',
-      marginTop:'5%',
+      marginTop:'10%',
       fontFamily:'Arial',
       fontVariant: 'small-caps',
       color:blueBlk
@@ -119,16 +114,15 @@ const styles ={
 
 
 class Header extends Component {
-  // state = {hoursIsOpen: false}
 
   renderBrandDiv=(style)=>{
     return(
       <div
         style={style.div}
       >
-        <Icon size={style.iconSize} name="eye" style={{'marginLeft':'1%'}}/>
+        <Icon size={style.iconSize} name="eye" style={{'marginLeft':'0%'}}/>
         <Link to='/' //className="pt-navbar-heading"
-              style={{"marginLeft":"3%", 'display':'flex', 'alignItems':'center'}}>
+              style={{"marginLeft":"1%", 'display':'flex', 'alignItems':'center'}}>
           <p style={style.brandTextStyle}>
             Twitter Analyzer
           </p>

@@ -4,8 +4,8 @@
 
 const Twitter = require('twitter')
 const keys = require('../config/keys')
-const mongoose = require('mongoose')
-const Tweets = mongoose.model('tweets')
+//const mongoose = require('mongoose')
+//const Tweets = mongoose.model('tweets')
 
 const client = new Twitter({
   consumer_key: keys.twitterConsumerKey,
@@ -43,14 +43,14 @@ const addToDatabase =()=>{
 
 module.exports = (app) => {
   app.get('/api/tweets', async (req, res) => {
-    //console.log('kamala?',req.query)
+    console.log('numtweets?',req.query.numTweets)
 
     //grab record from database; check since_id and grab tweets from there
 
 
     const params={
       screen_name:req.query.tweeter,
-      count:100,
+      count:req.query.numTweets,
       tweet_mode: 'extended'
       //since_id: newestId
     }
