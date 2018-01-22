@@ -57,16 +57,18 @@ module.exports = (app) => {
     //console.log('req from tweets route ',req)
 
     await client.get('statuses/user_timeline', params,  (error, tweets, response) => {
+
+      //console.log(tweets)
       if (!error) {
         //next time just grab newest tweets by looking at newest id
 
 
         //change this to map to a new object with just the database fields
         //sort by id - higher the id, the newer the tweet
-        const t = tweets.map(t => t.full_text)
+        //const t = tweets.map(t => t.full_text)
         const newestId = tweets[0].id
         console.log(newestId)
-        const tweetObj=separateTweets(t)
+        //const tweetObj=separateTweets(t)
         //console.log(tweetObj)
         //const tweetWords = tweetsToWordCount(tweetObj.tweets)
         //console.log(tweetWords)

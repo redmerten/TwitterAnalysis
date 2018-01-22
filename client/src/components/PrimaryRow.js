@@ -40,12 +40,13 @@ class PrimaryRow extends Component{
     const pick = Math.floor(Math.random() * 20)
     this.props.fetchTweets(mostFollowed[pick], this.state.numTweets)
     this.setState({inputValue:mostFollowed[pick]})
+    this.setState({tweeter:mostFollowed[pick]})
     //console.log('tweets',this.props)
 
   }
 
   tweetsToOneWordCount = () =>{
-    const no = `if =&gt all am when not &amp our  the of at it it's so my who as has them about are to i a an this we in their they us her rt @ how was or u me your than must will every more up by for you with his i'm on which would until from and that too have is be —`
+    const no = `if =&gt all am when not &amp our the of at it it's so my who as has them about are to i a an this we in their they us rt @ how was or u me your than must will every more up by for you with i'm on which would until from and that too have is be —`
     const nonos = no.split(' ')
     nonos.push("it’s")
     nonos.push("i’m")
@@ -146,33 +147,50 @@ class PrimaryRow extends Component{
 
 
   analyzeTweets =(style)=>{
-    const oneWordJSON=this.tweetsToOneWordCount()
-    //const twoWordJSON=this.tweetsToTwoWords()
-    //const dataToChart=oneWordJSON.filter(w=>w.y>5)
-    const dataToChart = oneWordJSON.slice(0,20)
-    //console.log(dataToChart)
-    return(
-      <div style={style.nextDiv}>
-        {this.renderChart(dataToChart)}
+    console.log('screen name', this.props.tweets[0].user.screen_name)
+    console.log('state', this.state.tweeter)
+     if (this.props.tweets[0].user.screen_name === this.state.tweeter){
+       const oneWordJSON=this.tweetsToOneWordCount()
+       //const twoWordJSON=this.tweetsToTwoWords()
+       //const dataToChart=oneWordJSON.filter(w=>w.y>5)
+       const dataToChart = oneWordJSON.slice(0,20)
+       //console.log(dataToChart)
+       return(
+         <div style={style.nextDiv}>
+           {this.renderChart(dataToChart)}
 
-      </div>
-    )
+         </div>
+       )
+     }
+     else
+       return(
+         <div style={{'marginTop':'5%'}}>
+           <h4>The tweeter you requested does not exist.  Please try again.</h4>
+         </div>
+       )
+
+
+
   }
 
   renderPrimaryRow=(style)=> {
-    console.log('tweeter', this.state.tweeter)
-    console.log('value', this.state.inputValue)
+    //console.log('tweeter', this.state.tweeter)
+    //console.log('value', this.state.inputValue)
+    console.log('tweets from server', this.props.tweets)
     return (
       <div style={style.mainDiv}>
         <h4>Enter A Tweeter for Analysis</h4>
         <form onSubmit={(event)=>this.updateTweeter(event)}
+              style={style.formStyle}
         >
+          <p style={style.pStyle}>@</p>
           <input
             type="text"
             value={this.state.inputValue}
             onChange={evt => this.updateInputValue(evt)}
+            style={style.input}
           />
-          <input type="submit" value="Submit" />
+          <input type="submit" value="Submit" style={style.submit}/>
         </form>
 
         {this.state.inputValue===''
@@ -181,9 +199,11 @@ class PrimaryRow extends Component{
         }
         {Array.isArray(this.props.tweets)
           ? this.analyzeTweets(style)
-          : <div style={style.nextDiv}>
+          : this.props.tweets.error
+            ? <p style={style.error}>Error:  This data is not available.</p>
+            :<div style={style.nextDiv}>
              <Icon spin name="spinner" style={style.spinnerStyle}/>
-          </div>
+            </div>
         }
 
 
@@ -230,6 +250,35 @@ const styles={
       justifyContent:'center',
       alignItems:'center',
       marginTop:'2%'
+    },
+    formStyle:{
+      display:'flex',
+      justifyContent:'center',
+      alignItems:'baseline',
+
+    },
+    error:{
+      marginTop:'3%',
+      fontSize: '150%'
+    },
+    pStyle:{
+      fontSize:'100%',
+      marginLeft:'5%'
+    },
+    input:{
+      border:'none',
+      borderBottom:'solid purple 1px',
+      color:'purple',
+      fontSize:'150%'
+
+    },
+    submit:{
+      backgroundColor:'purple',
+      color:'white',
+      borderColor:'purple',
+      borderRadius:'5%',
+      marginLeft:'1%'
+
     },
     spinnerStyle:{
       iconSize:'3x',
