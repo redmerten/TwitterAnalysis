@@ -4,7 +4,6 @@
 
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-//import '@blueprintjs/core/dist/blueprint.css'
 import PrimaryRow from './PrimaryRow'
 
 
